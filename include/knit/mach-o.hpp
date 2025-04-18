@@ -379,6 +379,7 @@ namespace knt
 		bool is_extern;
 		bool is_undefined;
 		bool is_common;
+		bool is_weak;
 		std::uint64_t common_size;
 		std::uint8_t common_align;
 	};
