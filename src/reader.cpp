@@ -3,7 +3,7 @@
 #include <fcntl.h>
 #include <fstream>
 #include <unistd.h>
-#include <knit/macho/reader.hpp>
+#include <knit/reader.hpp>
 #include <sys/mman.h>
 #include <sys/stat.h>
 

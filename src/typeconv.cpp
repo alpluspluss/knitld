@@ -1,7 +1,7 @@
 /* this file is a part of Knit linker project; see LICENSE for more info */
 
 #include <string>
-#include <knit/macho/typeconv.hpp>
+#include <knit/typeconv.hpp>
 
 namespace knt
 {
@@ -131,9 +131,11 @@ namespace knt
 					return "X86_64_RELOC_SIGNED_2";
 				case RelocationType::X86_64_RELOC_SIGNED_4:
 					return "X86_64_RELOC_SIGNED_4";
+				case RelocationType::X86_64_RELOC_TLV:
+					return "X86_64_RELOC_TLV";
 				default:
 					return std::string("<unknown: "
-					                        + std::string("\n\treloc-> ")
+					                        + std::string("reloc-> ")
 					                        + std::string(std::to_string(static_cast<std::uint32_t>(reloc)))
 					                        + std::string(" | ")
 					                        + std::string("cpu -> ")
@@ -159,9 +161,19 @@ namespace knt
 					return "ARM64_RELOC_GOT_LOAD_PAGE21";
 				case RelocationType::ARM64_RELOC_GOT_LOAD_PAGEOFF12:
 					return "ARM64_RELOC_GOT_LOAD_PAGEOFF12";
+				case RelocationType::ARM64_RELOC_POINTER_TO_GOT:
+					return "ARM64_RELOC_POINTER_TO_GOT";
+				case RelocationType::ARM64_RELOC_TLVP_LOAD_PAGE21:
+					return "ARM64_RELOC_TLVP_LOAD_PAGE21";
+				case RelocationType::ARM64_RELOC_TLVP_LOAD_PAGEOFF12:
+					return "ARM64_RELOC_TLVP_LOAD_PAGEOFF12";
+				case RelocationType::ARM64_RELOC_ADDEND:
+					return "ARM64_RELOC_ADDEND";
+				case RelocationType::ARM64_RELOC_AUTHENTICATED_POINTER:
+					return "ARM64_RELOC_AUTHENTICATED_POINTER";
 				default:
 					return std::string("<unknown: "
-					                        + std::string("\n\treloc-> ")
+					                        + std::string("reloc-> ")
 					                        + std::string(std::to_string(static_cast<std::uint32_t>(reloc)))
 					                        + std::string(" | ")
 					                        + std::string("cpu -> ")

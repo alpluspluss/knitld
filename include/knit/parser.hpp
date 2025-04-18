@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string_view>
 #include <vector>
+#include <knit/dwarf.hpp>
+#include <knit/dyld.hpp>
 #include <knit/mach-o.hpp>
 
 namespace knt
@@ -16,6 +18,8 @@ namespace knt
 		explicit MachoParser(std::string_view path);
 
 		~MachoParser();
+
+		void parse();
 
 		[[nodiscard]]
 		bool is_macho() const;
@@ -65,6 +69,24 @@ namespace knt
 		[[nodiscard]]
 		std::uint32_t flags() const;
 
+		[[nodiscard]]
+		bool has_dynamic_linking() const;
+
+		[[nodiscard]]
+		bool has_chained_fixups() const;
+
+		[[nodiscard]]
+		const DynamicLinkingInfo& dynamic_linking_info() const;
+
+		[[nodiscard]]
+		bool has_dwarf() const;
+
+		[[nodiscard]]
+		const DwarfInfo& dwarf_info() const;
+
+		[[nodiscard]]
+		const DwarfSection* dwarf_section(DwarfSectionType type) const;
+
 	private:
 		std::string path;
 		std::vector<std::uint8_t> file;
@@ -93,6 +115,22 @@ namespace knt
 		SymtabCommand symtab_cmd;
 		DysymtabCommand dysymtab_cmd;
 
-		void parse();
+		bool dynlinking;
+		bool chainfixups;
+		DynamicLinkingInfo dyldinfo;
+		bool contains_dwarf;
+		DwarfInfo dwarfinfo;
+
+		void parse_dynamic_linking();
+
+		void parse_rebase_info();
+
+		void parse_bind_info(std::uint32_t offset, std::uint32_t size, std::vector<BindInfo>& binds);
+
+		void parse_lazy_bind_info();
+
+		void parse_weak_bind_info();
+
+		void parse_chained_fixups();
 	};
 }
